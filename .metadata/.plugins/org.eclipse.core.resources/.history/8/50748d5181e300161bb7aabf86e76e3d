@@ -1,0 +1,49 @@
+package application;
+
+import javafx.scene.image.ImageView;
+
+public abstract class Touchable {
+	private ImageView mySprite;
+	private double xVelocity;
+	private double yVelocity;
+	
+	public Touchable(ImageView sprite){
+		mySprite=sprite;
+	}
+	
+	public ImageView getSprite(){
+		return mySprite;
+	}
+	
+	public void move(){
+		
+	}
+	
+	private boolean collided(Touchable other){
+    	//this kind of collision only works if things don't move by a lot per frame.
+    	double myWidth=mySprite.getFitWidth();
+		double myHeight=mySprite.getFitHeight();
+		double centeredX=mySprite.getX()+myWidth/2;
+		double centeredY=mySprite.getY()+myHeight/2;
+		
+		double otherWidth=other.getSprite().getFitWidth();
+		double otherHeight=other.getSprite().getFitHeight();
+		double spriteX=other.getSprite().getX()+otherWidth/2;
+		double spriteY=other.getSprite().getY()+otherHeight/2;
+		
+		if(Math.abs(bouncerX-spriteX)<(spriteWidth+bouncerWidth)/2
+				&&Math.abs(bouncerY-spriteY)<(spriteHeight+bouncerHeight)/2){
+			if((bouncerHeight+spriteHeight)/2-Math.abs(bouncerY-spriteY)<
+					(bouncerWidth+spriteWidth)/2-Math.abs(bouncerX-spriteX)){
+				yVelocity=-yVelocity;
+			}
+			else{
+				xVelocity=-xVelocity;
+			}			
+			return true;
+		}
+		return false;   	   	
+    }
+	
+
+}

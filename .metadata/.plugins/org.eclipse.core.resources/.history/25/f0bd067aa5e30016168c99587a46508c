@@ -1,0 +1,61 @@
+package application;
+
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+
+public class Touchable {
+	protected ImageView mySprite;
+	protected double xVelocity;
+	protected double yVelocity;
+	
+	public Touchable(ImageView sprite){
+		mySprite=sprite;
+	}
+	
+	public Touchable(ImageView sprite,double xVelocity, double yVelocity){
+		this(sprite);
+		this.xVelocity=xVelocity;
+		this.yVelocity=yVelocity;
+	}
+	
+	public ImageView getSprite(){
+		return mySprite;
+	}
+	
+	public double xVelocity(){
+		return xVelocity;
+	}
+	
+	public double yVelocity(){
+		return yVelocity;
+	}
+	
+	public void setVelocity(double x, double y){
+		xVelocity=x;
+		yVelocity=y;
+	}
+	
+	public void move(double elapsedTime){
+		mySprite.setX(mySprite.getX()+xVelocity*elapsedTime);
+		mySprite.setY(mySprite.getY()+yVelocity*elapsedTime);
+	}
+	
+	protected boolean isTouching(Touchable other){
+    	//this kind of collision only works if things don't move by a lot per frame.
+    	double myWidth=mySprite.getFitWidth();
+		double myHeight=mySprite.getFitHeight();
+		double centeredX=mySprite.getX()+myWidth/2;
+		double centeredY=mySprite.getY()+myHeight/2;
+		
+		double otherWidth=other.getSprite().getFitWidth();
+		double otherHeight=other.getSprite().getFitHeight();
+		double otherCenteredX=other.getSprite().getX()+otherWidth/2;
+		double otherCenteredY=other.getSprite().getY()+otherHeight/2;
+		
+		if(Math.abs(centeredX-otherCenteredY)<(myWidth+otherWidth)/2
+				&&Math.abs(centeredY-otherCenteredY)<(myHeight+otherHeight)/2){		
+			return true;
+		}
+		return false;   	   	
+    }
+}

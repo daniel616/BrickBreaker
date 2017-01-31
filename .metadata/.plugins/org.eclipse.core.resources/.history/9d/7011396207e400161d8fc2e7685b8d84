@@ -1,0 +1,34 @@
+package application;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Brick extends Touchable{
+	private int myHealth;
+	private boolean destroyed=false;
+	
+	public Brick(int health, ImageView image){
+		super(image);
+		myHealth=health;
+	}
+	
+	public boolean isDestroyed(){
+		return destroyed;
+	}
+	
+	public void healthDecrement(){
+		myHealth--;
+		updateImage();
+	}
+	
+	public int getHealth(){
+		return myHealth;
+	}
+	
+	private void updateImage(){
+		if(myHealth<=10&&myHealth>=1){
+			Image image = new Image(getClass().getClassLoader().getResourceAsStream("brick"+myHealth+".gif"));
+			getSprite().setImage(image);
+		}
+	}	
+}

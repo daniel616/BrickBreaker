@@ -1,0 +1,69 @@
+package application;
+
+
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+/*
+ * An extension of the Touchable class. This object will bounce off walls, bricks and paddles.
+ * If it is at the bottom of the screen, it is removed from the world. This and the Touchable are my "masterpieces".
+ * The isTouching code and the bounceOff code have some overlap due to the ways they are calculated.
+ * I kept them split up anyways so that we could have each function assigned to one specific task.
+ */
+
+public class Bouncer extends Touchable{	
+	private double SIZE;
+	
+	public Bouncer(ImageView myBouncer, double xVelocity, double yVelocity, double SIZE){
+		super(myBouncer,xVelocity,yVelocity);
+		this.SIZE=SIZE;
+	}
+	
+	public void bounceOff(Touchable other){
+    	//this kind of collision only works if things don't move by a lot per frame.
+		//Changes direction if it is touching the "other" touchable.
+		//Reverse x velocity if intersection has smaller width than height.
+		//Reverses y velocity  if intersection has smaller or equal height compared to width.
+		if(isTouching(other)){
+			ImageView mySprite=getSprite();
+			double bouncerWidth=mySprite.getFitWidth();
+			double bouncerHeight=mySprite.getFitHeight();
+			double bouncerX=mySprite.getX()+bouncerWidth/2;
+			double bouncerY=mySprite.getY()+bouncerHeight/2;
+		
+			ImageView sprite=other.getSprite();
+			double otherWidth=sprite.getFitWidth();
+			double otherHeight=sprite.getFitHeight();
+			double otherX=sprite.getX()+otherWidth/2;
+			double otherY=sprite.getY()+otherHeight/2;
+			
+			if((bouncerHeight+otherHeight)/2-Math.abs(bouncerY-otherY)<
+					(bouncerWidth+otherWidth)/2-Math.abs(bouncerX-otherX)){
+				reverseY();
+			}
+			else{
+				reverseX();
+			}
+		}
+		
+	}
+	
+	public void wallBounce(){
+		//Bounce at game boundaries.
+		ImageView sprite=getSprite();
+		if(sprite.getX()<0||sprite.getX()+sprite.getFitWidth()>SIZE){
+			reverseX();
+		}
+		if(sprite.getY()<0){
+			reverseY();
+		}
+	}
+	
+	public void reverseX(){
+		setVelocity(-xVelocity(), yVelocity());
+	}
+	
+	public void reverseY(){
+		setVelocity(xVelocity(),-yVelocity());
+	}
+}

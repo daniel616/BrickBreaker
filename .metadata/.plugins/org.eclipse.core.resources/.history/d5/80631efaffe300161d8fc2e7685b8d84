@@ -1,0 +1,64 @@
+package application;
+
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+/*
+ * An extension of the Touchable class. This object will bounce off walls, bricks and paddles.
+ * If it is at the bottom of the screen, it is removed from the world.
+ */
+
+public class Bouncer extends Touchable{	
+	private double SIZE;
+	
+	public Bouncer(ImageView myBouncer, double xVelocity, double yVelocity, double SIZE){
+		super(myBouncer,xVelocity,yVelocity);
+		this.SIZE=SIZE;
+	}
+	
+	public void collisionPhysics(Touchable other){
+    	//this kind of collision only works if things don't move by a lot per frame.
+		//
+		if(isTouching(other)){
+			ImageView mySprite=getSprite();
+			double bouncerWidth=mySprite.getFitWidth();
+			double bouncerHeight=mySprite.getFitHeight();
+			double bouncerX=mySprite.getX()+bouncerWidth/2;
+			double bouncerY=mySprite.getY()+bouncerHeight/2;
+		
+			ImageView sprite=other.getSprite();
+			double spriteWidth=sprite.getFitWidth();
+			double spriteHeight=sprite.getFitHeight();
+			double spriteX=sprite.getX()+spriteWidth/2;
+			double spriteY=sprite.getY()+spriteHeight/2;
+			
+			if((bouncerHeight+spriteHeight)/2-Math.abs(bouncerY-spriteY)<
+					(bouncerWidth+spriteWidth)/2-Math.abs(bouncerX-spriteX)){
+				reverseX();
+			}
+			else{
+				reverseY();
+			}
+		}
+	}
+	
+	public void wallBounce(){
+		//Bounce at game boundaries.
+		ImageView sprite=getSprite();
+		if(sprite.getX()<0||sprite.getX()+sprite.getFitWidth()>SIZE){
+			reverseX();
+		}
+		if(sprite.getY()<0){
+			reverseY();
+		}
+	}
+	
+	public void reverseX(){
+		setVelocity(-xVelocity(), yVelocity());
+	}
+	
+	public void reverseY(){
+		setVelocity(xVelocity(),-yVelocity());
+	}
+	
+}

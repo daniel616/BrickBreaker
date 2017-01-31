@@ -1,0 +1,20 @@
+package application;
+import javafx.scene.control.Label;
+
+public class EnhancedLabel {
+	private String text;
+	private int score;
+	private Label label;
+	
+	public EnhancedLabel(String description, int value, Label label){
+		text=description;
+		score=value;
+		this.label=label;
+	}
+	
+	public void updateScore(int value){
+		score+=value;
+		label.setText(text+score);
+	}
+
+}

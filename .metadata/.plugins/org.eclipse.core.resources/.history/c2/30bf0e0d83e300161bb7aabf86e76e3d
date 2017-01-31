@@ -1,0 +1,71 @@
+package application;
+import javafx.scene.image.ImageView;
+
+public class Bouncer {	
+	private double xVelocity;
+	private double yVelocity;
+	private ImageView mySprite;
+	private ImageView paddle;
+	public static final double PADDLE_CONTROL=150;
+	
+	
+	public Bouncer(ImageView myBouncer, ImageView paddle, double xVelocity, double yVelocity){
+		this.mySprite=myBouncer;
+		this.paddle=paddle;
+		this.xVelocity=xVelocity;
+		this.yVelocity=yVelocity;
+	}
+	
+	private boolean collisionPhysics(ImageView sprite){
+    	//this kind of collision only works if things don't move by a lot per frame.
+    	double bouncerWidth=mySprite.getFitWidth();
+		double bouncerHeight=mySprite.getFitHeight();
+		double bouncerX=mySprite.getX()+bouncerWidth/2;
+		double bouncerY=mySprite.getY()+bouncerHeight/2;
+		
+		double spriteWidth=sprite.getFitWidth();
+		double spriteHeight=sprite.getFitHeight();
+		double spriteX=sprite.getX()+spriteWidth/2;
+		double spriteY=sprite.getY()+spriteHeight/2;
+		
+		if(Math.abs(bouncerX-spriteX)<(spriteWidth+bouncerWidth)/2
+				&&Math.abs(bouncerY-spriteY)<(spriteHeight+bouncerHeight)/2){
+			if((bouncerHeight+spriteHeight)/2-Math.abs(bouncerY-spriteY)<
+					(bouncerWidth+spriteWidth)/2-Math.abs(bouncerX-spriteX)){
+				yVelocity=-yVelocity;
+			}
+			else{
+				xVelocity=-xVelocity;
+			}			
+			return true;
+		}
+		return false;   	   	
+    }
+
+		
+	public ImageView getSprite(){
+		return mySprite;
+	}
+	
+	public double xVelocity(){
+		return xVelocity;
+	}
+	
+	public double yVelocity(){
+		return yVelocity;
+	}
+	
+	public void setVelocity(double x, double y){
+		xVelocity=x;
+		yVelocity=y;
+	}
+	
+	public void reverseX(){
+		xVelocity=-xVelocity;
+	}
+	
+	public void reverseY(){
+		yVelocity=-yVelocity;
+	}
+	
+}

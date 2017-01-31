@@ -1,0 +1,22 @@
+package application;
+
+import javafx.scene.image.ImageView;
+
+public class PowerUp {
+	private int version;
+	private ImageView sprite;
+	
+	public PowerUp(int n,ImageView sprite){
+		version=n;
+		this.sprite=sprite;
+	}
+	
+	public int getVersion(){
+		return version;
+	}
+	
+	public ImageView getSprite(){
+		return sprite;
+	}
+
+}

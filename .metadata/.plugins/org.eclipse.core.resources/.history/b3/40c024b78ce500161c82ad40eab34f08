@@ -1,0 +1,46 @@
+package application;
+
+import java.util.ArrayList;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Brick extends Touchable{
+	//Stores information concerning the bricks on the map, such as health and whether the brick should be removed or not.
+	private int myHealth;
+	private boolean destroyed=false;
+	private Integer score;
+	
+	public Brick(int health, ImageView image, Integer score){
+		super(image);
+		myHealth=health;
+	}
+	
+	public void getHit(){
+		healthDecrement();
+		score+=1;
+		if(myHealth==0){
+			destroyed=true;
+		}
+	}
+	
+	public boolean isDestroyed(){
+		return destroyed;
+	}
+	
+	public void healthDecrement(){
+		myHealth--;
+		updateImage();
+	}
+	
+	public int getHealth(){
+		return myHealth;
+	}
+	
+	private void updateImage(){
+		if(myHealth<=10&&myHealth>=1){
+			Image image = new Image(getClass().getClassLoader().getResourceAsStream("brick"+myHealth+".gif"));
+			getSprite().setImage(image);
+		}
+	}	
+}
