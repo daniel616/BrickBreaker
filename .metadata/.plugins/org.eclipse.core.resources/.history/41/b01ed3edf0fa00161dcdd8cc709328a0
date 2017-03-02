@@ -1,0 +1,7 @@
+package BackEndGrid;
+
+public enum TestEnum {
+	RED,
+	ORANGE,
+	GREEN;
+}

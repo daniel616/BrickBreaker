@@ -1,0 +1,36 @@
+package main;
+	
+import controls.Controller;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+
+/**
+ * 
+ * @author Daniel
+ * Instantiates all starting classes and the user display, and populates the scene with nodes from classes.
+ */
+
+public class Main extends Application {
+	
+	public void start(Stage primaryStage){
+		try{
+			Controller c = new Controller(primaryStage);
+			//Scene myScene=c.getInterface().getScene();			
+			//myScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			//The commented line of code above doesn't work because application.css is in a different package.
+			
+//			primaryStage.setScene(myScene);	
+//			primaryStage.setTitle("Team 18");
+//			primaryStage.show();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+}

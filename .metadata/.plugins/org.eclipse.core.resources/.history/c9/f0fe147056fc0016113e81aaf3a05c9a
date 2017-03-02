@@ -1,0 +1,8 @@
+package exceptions;
+
+public class RepeatedVariableNameException extends Exception{
+	public RepeatedVariableNameException(){
+		System.out.println("Variable name repeated");
+	}
+
+}

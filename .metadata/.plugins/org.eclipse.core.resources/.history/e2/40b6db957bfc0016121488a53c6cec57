@@ -1,0 +1,32 @@
+/**
+ * Written by Alison Huang
+ * 
+ * ~TEMPORARY~ Class to test the functionality of and demonstrate the text input and console output box being instantiated as 
+ * Group objects and directly added to a parent node
+ */
+
+package application;
+
+import gui.ConsoleOutput;
+import gui.TextInput;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class Tester extends Application {
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		VBox root = new VBox();
+		root.getChildren().addAll(new TextInput(null), new ConsoleOutput());
+		primaryStage.setScene(new Scene(root));
+		primaryStage.show();
+		
+	}
+	
+	public static void main(String[] args){
+		launch(args);
+	}
+	
+}

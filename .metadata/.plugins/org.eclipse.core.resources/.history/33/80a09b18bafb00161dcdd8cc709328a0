@@ -1,0 +1,26 @@
+package commands.TurtleCommands;
+
+import java.util.List;
+
+import application.Turtle;
+import exceptions.StateNotFoundException;
+
+/** IsShowing returns 1 if Turtle is showing or 0 if it is invisible
+ * 
+ * @author Kyle
+ *
+ */
+public class IsShowing extends TurtleCommands {
+	
+	public static final int VARIABLES = 0;
+
+	public IsShowing(List<Double> args) {
+		super(args);
+	}
+
+	@Override
+	public double execute(Turtle t) throws StateNotFoundException {
+		return (t.getFinalTurtleState().turtleShowing())?1.0:0.0;
+	}
+
+}

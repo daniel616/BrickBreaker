@@ -1,0 +1,185 @@
+package controls;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.ResourceBundle;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Map.Entry;
+import java.util.regex.Pattern;
+
+import TurtleDetails.Turtle;
+import commands.Commands;
+import commands.BooleanCommands.BooleanCommands;
+import commands.MathCommands.MathCommands;
+import commands.TurtleCommands.TurtleCommands;
+import exceptions.CommandException;
+import exceptions.StateNotFoundException;
+
+public class Parser {
+
+	private static final String WHITESPACE = "\\s+";
+	private static final String SYNTAX_LOCATION = "resources/languages/Syntax";
+	private static final String DEFAULT_LANGUAGE = "English";
+	private Controller control;
+	private Queue<String> code;
+	private List<Entry<String, Pattern>> commands;
+	private List<Entry<String, Pattern>> syntax;
+	
+	public Parser(Controller c) {
+		control = c;
+		setLanguage(DEFAULT_LANGUAGE);
+		addSyntax();
+	}
+
+	public Parser(Controller c, String language) {
+		this(c);
+		setLanguage(language);
+		addSyntax();
+	}
+
+	public Parser(Controller c, String language, Queue<String> info) {
+		this(c, language);
+		code = info;
+	}
+
+	public double addCode(String info) throws CommandNotFoundException, ReflectionException, StateNotFoundException, CommandException {
+		// TODO Manage Comments, etc...
+		info.split(WHITESPACE);
+		code.addAll(new ArrayList<String>(Arrays.asList(info)));
+		return parse();
+	}
+
+	private double parse() throws CommandNotFoundException, ReflectionException, StateNotFoundException, CommandException{
+		if(!code.isEmpty()){
+			String comName = code.poll();
+			List<Object> parameters = getParameters(getAmountParameters(comName));
+			Commands com = createCommand(parameters, comName);
+			return executeCommand(com);
+		} else{
+			return 0;
+		}
+		
+	}
+
+	private double executeCommand(Commands c) throws StateNotFoundException, CommandException {
+		if(c instanceof BooleanCommands)
+			return ((BooleanCommands) c).execute();
+		else if(c instanceof MathCommands)
+			return ((MathCommands) c).execute();
+		else if(c instanceof TurtleCommands)
+			return ((TurtleCommands) c).execute(/*control.getModel().getTurtle( TODO )*/ new Turtle());
+		// TODO Miscellaneous Commands
+				//else if(c instanceof Miscellaneous)
+					//return ((TurtleCommands) c).execute(control.getModel().getTurtle(/* TODO */));
+		throw new CommandException("Not Found");
+	}
+
+	private Commands createCommand(List<Object> parameters, String comName) throws CommandNotFoundException {
+		try {
+			Class<?> clazz = Class.forName("commands/" + getCommandClass(comName));
+			Constructor<?> constructor = clazz.getDeclaredConstructor(List.class);
+			return (Commands)constructor.newInstance(parameters);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		throw new CommandNotFoundException(comName);
+	}
+
+	private List<Object> getParameters(int amount) throws StateNotFoundException, CommandException{
+		List<Object> parameters = new LinkedList<>();
+		while(parameters.size()!=amount){
+			try{
+				getAmountParameters(code.peek());
+				parameters.add(parse());
+			} catch(CommandNotFoundException | ReflectionException e){
+				String var = control.getModel().readOnlyVariables().get(code.peek());
+				if(var != null){
+					parameters.add(code.poll()); 
+				} else{
+					// TODO throw new VariableNotFoundException()
+				}
+			}
+		}
+		return parameters;
+	}
+
+	private int getAmountParameters(String name) throws CommandNotFoundException, ReflectionException{		
+		try{
+			Class<?> clazz = Class.forName("commands/" + getCommandClass(name));
+			return (int)clazz.getDeclaredField("VARIABLES").get(null);
+		} catch(ClassNotFoundException e) {
+			// TODO user made commands
+			//String var = control.getModel().readOnlyCommands().get(name);
+			/*try{
+				return new DoUserInstruction(name).getAmountParameters();
+			} catch(CommandNotFoundException e){*/
+			throw new CommandNotFoundException(name);
+			//}
+		} catch (SecurityException | IllegalAccessException | IllegalArgumentException e) {
+			throw new ReflectionException();
+		} catch (NoSuchFieldException e) {
+			// TODO throw new IncompleteCommandClassException
+			throw new CommandNotFoundException(name);
+		}
+	}
+
+	private void addSyntax() {
+		syntax = new ArrayList<>();
+		ResourceBundle options = ResourceBundle.getBundle(SYNTAX_LOCATION);
+		Enumeration<String> iter = options.getKeys();
+		while (iter.hasMoreElements()) {
+			String key = iter.nextElement();
+			String regex = options.getString(key);
+			syntax.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
+		}
+	}
+
+	public void setLanguage(String language) {
+		commands = new ArrayList<>();
+		// TODO throw languagenotfoundexception
+		ResourceBundle options = ResourceBundle.getBundle("resources/languages/"+language);
+		Enumeration<String> iter = options.getKeys();
+		while (iter.hasMoreElements()) {
+			String key = iter.nextElement();
+			String regex = options.getString(key);
+			commands.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
+		}
+	}
+
+
+	private String getCommandClass(String name) throws ClassNotFoundException {
+		for(Entry<String, Pattern> c: commands)
+			if (match(name, c.getValue()))
+				return c.getKey();
+		throw new ClassNotFoundException(name);
+	}
+
+	private boolean match (String text, Pattern regex) {
+		return regex.matcher(text).matches();
+	}
+}

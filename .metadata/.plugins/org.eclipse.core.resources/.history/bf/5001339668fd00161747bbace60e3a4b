@@ -1,0 +1,65 @@
+package application;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+import TurtleDetails.Turtle;
+import TurtleDetails.TurtleTrail;
+/**
+ * Contains all the info that is specific to each running SLogo application.
+ * Getters will only return a copy of the data structures within the Model.
+ * @author Daniel
+ *
+ */
+public class Model {
+	private Map<String, Turtle> myTurtles;
+	private Collection<TurtleTrail> allTrails;
+	private Map<String,String> userCommands;
+	private Map<String,String> userVariables;
+	
+	public Model(){
+		myTurtles=new HashMap<>();
+		myTurtles.put("turtle", new Turtle());
+		allTrails=new HashSet<>();
+		userCommands=new HashMap<>();
+		userVariables=new HashMap<>();
+	}
+
+	public void makeVariable(String varName, String contents){
+		
+	}
+
+	public void makeFunction(String funcName, String contents){
+		
+	}
+
+	public void addTurtle(String turtleName) {
+		
+	}
+
+	/**
+	 * 
+	 * @return
+	 * 
+	 */
+	public Map<String,String>getCommands(){
+		return userCommands;
+	}
+	
+	public Map<String,String> getVariables(){
+		return userVariables;
+	}
+	public Collection<TurtleTrail> getTrails(){
+		return allTrails;
+	}
+	
+	public Map<String,Turtle> getTurtles(){
+		return myTurtles;
+	}
+	
+	
+	
+	
+}

@@ -1,0 +1,26 @@
+package commands.TurtleCommands;
+
+import java.util.List;
+
+import application.Turtle;
+import exceptions.StateNotFoundException;
+
+/** Clearscreen returns the Turtle to the home position, (0,0), and clears any trails the Turtle has made.
+ * 
+ * @author Kyle
+ *
+ */
+public class ClearScreen extends TurtleCommands {
+	
+	public static final int VARIABLES = 0;
+
+	public ClearScreen(List<Double> args) {
+		super(args);
+	}
+
+	public double execute(Turtle t) throws StateNotFoundException{
+		//TODO Figure out how to clear Turtle's trail
+		Home h = new Home(arguments);
+		return h.execute(t);
+	}
+}

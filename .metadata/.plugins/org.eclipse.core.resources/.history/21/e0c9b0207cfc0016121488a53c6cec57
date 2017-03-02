@@ -1,0 +1,60 @@
+package main;
+	
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import TurtleDetails.Turtle;
+import controls.Controller;
+import gui.ConsoleOutput;
+import gui.TextInput;
+import gui.TurtleScreen;
+import gui.UserInterface;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+/**
+ * 
+ * @author Daniel
+ * Instantiates all starting classes and the user display, and populates the scene with nodes from classes.
+ */
+
+
+
+public class Main extends Application {
+	
+	public void start(Stage primaryStage){
+		try{
+			Controller c=new Controller();
+			List<Turtle> turtleList=new ArrayList<>();
+			turtleList.add(new Turtle());
+			
+			TurtleScreen screen=new TurtleScreen(null, primaryStage);
+			ConsoleOutput console=new ConsoleOutput();
+			TextInput input = new TextInput(null);
+			UserInterface myDisplay=new UserInterface(input,console,screen,c);
+
+
+
+			Scene myScene=myDisplay.getScene();			
+			//myScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			//The commented line of code above doesn't work because application.css is in a different package.
+			
+			primaryStage.setScene(myScene);	
+			primaryStage.setTitle("Team 18");
+			primaryStage.show();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+}

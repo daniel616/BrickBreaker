@@ -1,0 +1,140 @@
+package application;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import TurtleDetails.Turtle;
+import TurtleDetails.TurtleTrail;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.collections.ObservableSet;
+/**
+ * Contains all the info that is specific to each running SLogo application.
+ * All data structures are observable.
+ * Only returns
+ * 
+ * Needs to throw exceptions for unfound names.
+ * 
+ * @author Daniel
+ *
+ */
+public class Model {
+	private ObservableMap<String, Turtle> myTurtles;
+	private ObservableSet<TurtleTrail> allTrails;
+	private ObservableList<String> inputHistory;
+	private ObservableMap<String,String> userCommands;
+	private ObservableMap<String,String> userVariables;
+	
+	public Model(){
+		myTurtles=FXCollections.observableMap(new HashMap<String,Turtle>());
+		myTurtles.put("turtle", new Turtle());
+		allTrails=FXCollections.observableSet(new HashSet<>());
+		inputHistory=FXCollections.observableList(new ArrayList<>());
+		userCommands=FXCollections.observableMap(new HashMap<>());
+		userVariables=FXCollections.observableMap(new HashMap<>());
+	}
+	
+	public void addTurtle(String turtleName, Turtle turtle){
+		myTurtles.put(turtleName, turtle);
+	}
+	
+	public Turtle getTurtle(String turtleName){
+		return myTurtles.get(turtleName);
+	}
+	
+	public void removeTurtle(String turtleName){
+		myTurtles.remove(turtleName);
+	}
+
+	public void addCommand(String command, String actions){
+		userCommands.put(command, actions);
+	}
+	
+	public void removeCommand(String command){
+		userCommands.remove(command);
+	}
+	
+	public void removeAllCommands(){
+		userCommands.clear();
+	}
+	
+	public void addVariable(String variable, String values){
+		userVariables.put(variable, values);
+	}
+	
+	public void addTrail(TurtleTrail trail){
+		allTrails.add(trail);
+	}	
+	/*
+	public List<String> getHistoryCopy(){
+		return inputHistory;
+	}
+	
+	public Map<String,String>getCommandsCopy(){
+		return copyStringMap(userCommands);
+	}
+	
+	public Map<String,String> getVariablesCopy(){
+		return copyStringMap(userVariables);
+	}
+	
+	public Map<String,Turtle> getTurtlesCopy(){
+		return copyTurtleMap(myTurtles);
+	}	
+	*/
+	
+	public Set<TurtleTrail> getTrails(){
+		return allTrails;
+	}
+	
+	public ObservableList<String> readOnlyHistory(){
+		return inputHistory;
+	}
+	
+	public ObservableMap<String,String> readOnlyCommands(){
+		return FXCollections.observableMap(Collections.unmodifiableMap(userCommands));
+	}
+	
+	public ObservableMap<String,String> readOnlyVariables(){
+		return FXCollections.observableMap(userVariables);
+	}
+	
+	public ObservableSet<TurtleTrail> readOnlyTrails(){
+		return FXCollections.observableSet(allTrails);
+	}
+	
+
+	public ObservableMap<String,Turtle> readOnlyTurtles(){
+		return Collections.unmodifiableMap(FXCollections.observableMap(copyTurtleMap(myTurtles)));
+	}
+	
+	private Map<String,String> copyStringMap(Map<String,String> map){
+		Map<String,String> copyMap =new HashMap<>();
+		for(String s:map.keySet()){
+			String key=new String(s);
+			String value=new String(map.get(s));
+			copyMap.put(key, value);
+		}
+		return copyMap;
+	}
+	
+	private Map<String, Turtle> copyTurtleMap(Map<String,Turtle> map){
+		Map<String, Turtle> copyMap=new HashMap<>();
+		for(String s:map.keySet()){
+			String key=new String(s);
+			Turtle value=map.get(s).copy();
+			copyMap.put(key, value);
+		}
+		return copyMap;
+	}
+	
+	
+	
+}

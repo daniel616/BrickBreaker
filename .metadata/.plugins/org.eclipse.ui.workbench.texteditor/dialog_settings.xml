@@ -2,22 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="updateLabels" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
-		<item value="false" key="wholeword"/>
+		<item value="true" key="wholeword"/>
 		<list key="findhistory">
-			<item value="updatelabels"/>
-			<item value="score"/>
-			<item value="brickCol"/>
-			<item value="collision"/>
-			<item value="data."/>
-			<item value="paddleinfluence"/>
-			<item value="System.gc"/>
-			<item value="print"/>
+			<item value="colorchooser"/>
+			<item value="setx"/>
+			<item value="class"/>
+			<item value="clazz"/>
+			<item value="penUp"/>
+			<item value="latticetype"/>
+			<item value="exception"/>
+			<item value="=="/>
 		</list>
 		<list key="replacehistory">
+			<item value="penDown"/>
+			<item value="T extends Cell"/>
+			<item value="T"/>
+			<item value="getEightNeighbors"/>
+			<item value="GridPoint"/>
 			<item value=""/>
 		</list>
 	</section>

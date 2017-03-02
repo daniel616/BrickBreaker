@@ -1,0 +1,32 @@
+package TurtleDetails;
+
+public class TurtleSpriteDetails {
+	private final double x;
+	private final double y;
+	private final double myHeading;
+	private final boolean isShowing;
+	
+	public TurtleSpriteDetails(double x, double y, double myHeading, boolean isShowing){
+		this.x=x;
+		this.y=y;
+		this.myHeading=myHeading;
+		this.isShowing=isShowing;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY(){
+		return y;
+	}
+	
+	public double getHeading(){
+		return myHeading;
+	}
+		
+	public boolean isShowing(){
+		return isShowing;
+	}	
+	
+}

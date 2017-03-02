@@ -1,0 +1,59 @@
+package commands.TurtleCommands;
+
+import java.util.List;
+
+import application.Turtle;
+import application.TurtleState;
+import exceptions.StateNotFoundException;
+
+/** Backward moves the Turtle backward based on its current heading by the entered distance and 
+ * returns the distance moved.
+ * 
+ * @author Kyle
+ *
+ */
+public class Backward extends TurtleCommands {
+
+	public static final int VARIABLES = 1;
+
+	public Backward(List<Double> args) {
+		super(args);
+	}
+
+	@Override
+	public double execute(Turtle t) throws StateNotFoundException {
+		TurtleState lastState = t.getFinalTurtleState();
+
+		double[] newLocation = newLocation(lastState);
+
+		t.addTurtleState(newLocation[0], newLocation[1], lastState.getHeading(), lastState.penDown(),
+				lastState.getColor(), lastState.turtleShowing());
+
+		return arguments.get(0);
+	}
+
+	private double[] newLocation(TurtleState lastState) {
+		double newX = lastState.getX() - arguments.get(0) * Math.cos(lastState.getHeading());
+		double newY = lastState.getY() - arguments.get(0) * Math.sin(lastState.getHeading());
+
+		// TODO how to access variables from front-end to determine x and y
+		// location of Turtle
+		if (newX > UserInterface.WIDTH) {
+			newX -= UserInterface.WIDTH;
+		}
+		if(newX < 0){
+			newX = UserInterface.WIDTH + newX;
+		}
+		if (newY > UserInterface.HEIGHT) {
+			newY -= UserInterface.HEIGHT;
+		}
+		if(newY < 0){
+			newY = UserInterface.HEIGHT + newY;
+		}
+
+		double[] newLocation = { newX, newY };
+		return newLocation;
+
+	}
+
+}

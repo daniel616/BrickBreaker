@@ -1,0 +1,18 @@
+1486314748536	Copy compilation unit
+1486314756533	Delete element
+1486314805530	Move compilation unit
+1486452540156	Extract method 'getAllCells'
+1486766806142	Rename field 'columns'
+1486766835218	Rename field 'rows'
+1486780311737	Extract method 'expandIfNeeded'
+1486784688404	Move compilation unit
+1486784777558	Move compilation unit
+1486784782775	Delete element
+1486791586049	Rename field 'MAX_HUNGER_PERIOD'
+1486791629540	Rename field 'STARVE_TIME'
+1486794906838	Change method 'getCell'
+1486837556067	Move compilation unit
+1486842924316	Extract method 'updateSquareGrid'
+1486847561610	Rename type 'FrontEndGrid'
+1486849583122	Extract method 'drawTriangleCell'
+1486849597959	Extract method 'drawHexagonCell'

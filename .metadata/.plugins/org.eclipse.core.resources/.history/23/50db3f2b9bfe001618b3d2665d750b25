@@ -1,0 +1,22 @@
+package TurtleDetails;
+
+import java.util.Collections;
+import java.util.List;
+
+public class CommandDetails {
+	private List<String> variables;
+	private List<String> command;
+	
+	public CommandDetails(List<String> variables,List<String> command){
+		this.variables=variables;
+		this.command=command;
+	}
+	
+	public List<String> readOnlyVariables(){
+		return Collections.unmodifiableList(variables);
+	}
+	
+	public List<String> readOnlyCommand(){
+		return Collections.unmodifiableList(command);
+	}
+}

@@ -1,0 +1,53 @@
+package main;
+	
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import application.Turtle;
+import gui.ConsoleOutput;
+import gui.TextInput;
+import gui.TurtleScreen;
+import gui.UserInterface;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+/**
+ * 
+ * @author Daniel
+ * Instantiates all starting classes and the user display, and populates the scene with nodes from classes.
+ */
+
+public class DanielMain extends Application {
+	
+	public void start(Stage primaryStage){
+		try{
+			List<Turtle> turtleList=new ArrayList<>();
+			turtleList.add(new Turtle());
+			
+			TurtleScreen screen=new TurtleScreen();
+			ConsoleOutput console=new ConsoleOutput();
+			TextInput input = new TextInput();
+			UserInterface myDisplay=new UserInterface(input,console,screen);
+
+			Scene myScene=myDisplay.getScene();			
+			//myScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			primaryStage.setScene(myScene);	
+			primaryStage.setTitle("Team 18");
+			primaryStage.show();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+}

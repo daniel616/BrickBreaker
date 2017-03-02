@@ -1,0 +1,16 @@
+package controls;
+
+public class Model{
+	private HashMap<String,Turtle> myTurtles;
+	Private List<TurtleTrails> allTrails;
+	Private HashMap<String, String> userDefinedCommands;
+	Private HashMap<String, String> userVariables;
+
+	public void makeVariable(String, String);
+	public void makeFunction(String, String;
+	Public void addTurtle(String turtleName);
+	Public Map<> getCommands;
+	Public Map<> getvariables;
+	Public list getTrails;
+	Public Map<String,Turtle> getTurtles;
+}
