@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="getMyCells" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="true" key="wholeword"/>
 		<list key="findhistory">
+			<item value="getmycells"/>
+			<item value="clazz"/>
+			<item value="createCommand"/>
+			<item value="createCommad"/>
+			<item value="createCom"/>
+			<item value="executeCommand"/>
 			<item value="colorchooser"/>
 			<item value="setx"/>
-			<item value="class"/>
-			<item value="clazz"/>
-			<item value="penUp"/>
-			<item value="latticetype"/>
-			<item value="exception"/>
-			<item value="=="/>
 		</list>
 		<list key="replacehistory">
 			<item value="penDown"/>

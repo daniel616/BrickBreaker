@@ -1,8 +1,0 @@
-package exceptions;
-
-public class RepeatedVariableNameException extends Exception{
-	public RepeatedVariableNameException(String s){
-		System.out.println("Variable name "+ s+ " is already used" );
-	}
-
-}

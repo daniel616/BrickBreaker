@@ -1,7 +1,0 @@
-package exceptions;
-
-public class RepeatedFunctionNameException extends Exception{
-	public RepeatedFunctionNameException(String s){
-		System.out.println("function name " + s+ " is already in use");
-	}
-}
